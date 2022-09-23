@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { getMonthDigit } from "../../utils";
-import { IDay } from "./Calendar";
+import { IDay } from "../../pages/Calendar";
 
 const DayOfCalendar = ({ date, month }: IDay) => {
   const dateDigit = date < 10 ? `0${date}` : date;

@@ -13,22 +13,22 @@ const CalendarHeader = ({
 }: ICalendarHeaderProps) => {
   const month = monthNames[currentMonth];
   return (
-    <div className="max-w-screen-xl m-auto">
+    <div className="m-auto">
       <div className="w-full px-2 h-20 flex justify-center items-center">
         <button
           onClick={() => setCurrentMonth((currentMonth as number) - 1)}
           aria-label={"previous_month"}
         >
-          <ArrowLeftIcon className="h-5 w-5 text-pink-700" />
+          <ArrowLeftIcon className="h-5 w-5 text-primary" />
         </button>
-        <p className="text-xl tracking-wider w-28 text-center font-sans text-pink-700">
+        <p className="text-xl tracking-wider w-28 text-center font-sans text-primary">
           {month}
         </p>
         <button
           onClick={() => setCurrentMonth((currentMonth as number) + 1)}
           aria-label={"next_month"}
         >
-          <ArrowRightIcon className="h-5 w-5 text-pink-700" />
+          <ArrowRightIcon className="h-5 w-5 text-primary" />
         </button>
       </div>
     </div>

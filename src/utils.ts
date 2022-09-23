@@ -13,7 +13,7 @@ export const monthNames = [
   "December",
 ];
 
-export const dayNames = [
+export const daysOfTheWeekNames = [
   "Monday",
   "Tuesday",
   "Wednesday",

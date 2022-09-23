@@ -1,12 +1,12 @@
-import Calendar from "../components/Calendar/Calendar";
+import Calendar from "./Calendar";
 import Header from "../components/Header";
 
 const Home = () => {
   return (
-    <div>
-      <Header />
-      <Calendar />
-    </div>
+    <div></div>
+    // <main>
+    //   <Header />
+    // </main>
   );
 };
 

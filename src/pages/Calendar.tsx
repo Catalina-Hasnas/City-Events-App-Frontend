@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
-import Day from "./DayOfCalendar";
-import CalendarHeader from "./CalendarHeader";
-import { dayNames } from "../../utils";
-import DayFromPreviousMonth from "./DayFromPreviousMonth";
+import Day from "../components/Calendar/DayOfCalendar";
+import CalendarHeader from "../components/Calendar/CalendarHeader";
+import { daysOfTheWeekNames, monthNames } from "../utils";
+import DayFromPreviousMonth from "../components/Calendar/DayFromPreviousMonth";
 import weekday from "dayjs/plugin/weekday";
+import { useNavigate, useParams } from "react-router-dom";
 
 export interface IDay {
   date: number;
@@ -15,7 +16,24 @@ export interface IDay {
 dayjs.extend(weekday);
 
 const Calendar = () => {
-  const [currentMonth, setCurrentMonth] = useState(dayjs().month());
+  const navigate = useNavigate();
+  const { monthName } = useParams();
+
+  const [currentMonth, setCurrentMonth] = useState(
+    monthNames.indexOf(monthName!)
+  );
+
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    navigate(`/calendar/${monthNames[currentMonth]}`);
+  }, [currentMonth]);
+
+  const updateDimensions = () => {
+    setScreenWidth(window.innerWidth);
+  };
+
+  window.addEventListener("resize", updateDimensions);
 
   function getDaysInMonth(year: number, month: number) {
     let day = 0;
@@ -45,23 +63,25 @@ const Calendar = () => {
 
   const daysInMonth = getDaysInMonth(2022, currentMonth);
 
+  console.log(window.innerWidth);
+
   return (
-    <main className="flex justify-center items-center">
-      <div className="max-w-screen-xl m-auto bg-white">
-        <div className="rounded-sm shadow-all-sides shadow-pink-300">
+    <div className="flex justify-center items-center ">
+      <div className="w-auto lg:w-8/12 m-auto bg-white">
+        <div className="rounded-sm shadow-all-sides shadow-primary">
           <CalendarHeader
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
           />
           <div className="w-full grid grid-cols-7 gap-0">
-            {dayNames.map((day, index) => {
+            {daysOfTheWeekNames.map((day, index) => {
               return (
                 <div
                   key={index}
-                  className="p-6 flex justify-center items-center border-y border-pink-700 hover:bg-pink-700 text-pink-700 hover:text-white"
+                  className="p-6 flex justify-center items-center border-y border-secondary hover:bg-secondary text-secondary hover:text-white"
                 >
                   <p className="text-sm uppercase tracking-wide text-center">
-                    {day}
+                    {screenWidth > 600 ? day : day.slice(0, 3)}
                   </p>
                 </div>
               );
@@ -77,7 +97,7 @@ const Calendar = () => {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 };
 
