@@ -15,7 +15,7 @@ const Header = () => {
       <div className="w-full flex justify-between lg:w-auto">
         <Link to="/">
           <img
-            src="https://i.ibb.co/wykGg2j/Screenshot-24.png"
+            src="https://i.postimg.cc/52k5g7Zx/Screenshot-24.png"
             alt="cityEventsLogo"
             className="h-auto max-h-24 w-full"
           />

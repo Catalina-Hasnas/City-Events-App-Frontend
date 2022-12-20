@@ -13,6 +13,8 @@ export interface IDay {
   month: number;
 }
 
+type DaysOfOtherMonth = "prev" | "next";
+
 dayjs.extend(weekday);
 
 const Calendar = () => {
@@ -55,18 +57,20 @@ const Calendar = () => {
     }
 
     const daysOfPrevMonth = days[0].dayOfTheWeek;
+    const dayOfNextMonth = 7 - (days[days.length - 1].dayOfTheWeek + 1);
 
-    const daysOfPrevMonthArray = Array.from(Array(daysOfPrevMonth));
-
-    return { days, daysOfPrevMonthArray };
+    const getDaysOfOtherMonth = (daysOfOtherMonth: DaysOfOtherMonth) => {
+      return Array.from(
+        Array(daysOfOtherMonth === "next" ? dayOfNextMonth : daysOfPrevMonth)
+      );
+    };
+    return { days, getDaysOfOtherMonth };
   }
 
   const daysInMonth = getDaysInMonth(2022, currentMonth);
 
-  console.log(window.innerWidth);
-
   return (
-    <div className="flex justify-center items-center ">
+    <div className="flex justify-center items-center mb-20">
       <div className="w-auto lg:w-8/12 m-auto bg-white">
         <div className="rounded-sm shadow-all-sides shadow-primary">
           <CalendarHeader
@@ -88,11 +92,14 @@ const Calendar = () => {
             })}
           </div>
           <div className="w-full grid grid-cols-7 gap-0 overflow-hidden">
-            {daysInMonth.daysOfPrevMonthArray.map((_, index) => {
+            {daysInMonth.getDaysOfOtherMonth("prev").map((_, index) => {
               return <DayFromPreviousMonth key={index} />;
             })}
             {daysInMonth.days.map((dayInMonth, index) => {
               return <Day key={index} {...dayInMonth} />;
+            })}
+            {daysInMonth.getDaysOfOtherMonth("next").map((_, index) => {
+              return <DayFromPreviousMonth key={index} />;
             })}
           </div>
         </div>
